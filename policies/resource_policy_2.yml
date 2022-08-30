@@ -6,15 +6,17 @@ resourcePolicy:
   importDerivedRoles:
   - my_derived_roles
 
-  resource: account
+  resource: payee
   rules:
   - actions: ["read", "create"]
     roles:
-    - member
     - documents_payee_management
     effect: EFFECT_ALLOW
+    condition:
+      match:
+        expr: request.principal.attr.account.id == request.resource.attr.account.id
 
-  - actions: ["create"]
+  - actions: ["read", "create", "update"]
     roles:
     - abacus_machine
     effect: EFFECT_ALLOW
@@ -26,3 +28,6 @@ resourcePolicy:
     roles:
     - updater
     effect: EFFECT_ALLOW
+    condition:
+      match:
+        expr: request.principal.attr.account.id == request.resource.attr.account.id

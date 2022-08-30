@@ -26,3 +26,4 @@ derived_roles:
             of:
               - expr: request.resource.attr.geography == request.principal.attr.geography
               - expr: request.resource.attr.geography in request.principal.attr.managed_geographies
+

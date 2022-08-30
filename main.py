@@ -11,83 +11,63 @@ from cerbos.sdk.model import *
 
 # Define the principals and resources we are going to use in the demo.
 
-# Harry is an employee in the UK working in the marketing department's design team
-harry = Principal(
-    id="harry",
-    roles={"employee"},
-    attr={"department": "marketing", "geography": "GB", "team": "design"},
+jess = Principal(
+    id="jess",
+    roles={"documents_payee_management"},
+    attr={
+            "account": 
+                {
+                    "id": "7123"
+                },
+        },
 )
 
-# Maggie is Harry's direct manager
 maggie = Principal(
     id="maggie",
-    roles={"employee", "manager"},
+    roles={"internal_employee",},
+    attr={"team": "permissions_platform"},
+)
+
+todd = Principal(
+    id="todd",
+    roles={"updater"},
     attr={
-        "department": "marketing",
-        "geography": "GB",
-        "managed_geographies": "GB",
-        "team": "design",
-    },
+            "account": 
+                {
+                    "id": "7123"
+                },
+        },
 )
 
-# Amanda is Maggie's counterpart in the US
-amanda = Principal(
-    id="amanda",
-    roles={"employee", "manager"},
+machine = Principal(
+    id="machine12345",
+    roles={"abacus_machine"},
     attr={
-        "department": "marketing",
-        "geography": "US",
-        "managed_geographies": ["US"],
-        "team": "design",
-    },
+        "group": "MachineGroup_Abacus"
+    }
 )
 
-# Pedro is an employee in a different team and geography
-pedro = Principal(
-    id="pedro",
-    roles={"employee"},
-    attr={"department": "shipping", "geography": "FR", "team": "Pod 1"},
+account_7123 = Resource(
+    id="account7123",
+    kind="account",
+    attr={"account": 
+            {
+                "id": "7123"
+            }
+        },
 )
 
-# A leave request created by Harry that is still in DRAFT status
-harrys_draft_holiday_request = Resource(
-    id="XX125",
-    kind="leave_request",
-    attr={
-        "department": "marketing",
-        "geography": "GB",
-        "id": "XX125",
-        "owner": "harry",
-        "status": "DRAFT",
-        "team": "design",
-    },
+payee_8 = Resource(
+    id="payee8",
+    kind="payee",
+    attr={ 
+            "payee_id": "8",
+            "account": 
+            {
+                "id": "7123"
+            }
+        },
 )
-
-# A leave request created by Maggie that is still in PENDING_APPROVAL status
-maggies_pending_holiday_request = Resource(
-    id="XX226",
-    kind="leave_request",
-    attr={
-        "department": "marketing",
-        "geography": "GB",
-        "id": "XX226",
-        "owner": "maggie",
-        "status": "PENDING_APPROVAL",
-        "team": "design",
-    },
-)
-
-# Harry's leave request that is now in PENDING_APPROVAL state
-harrys_pending_holiday_request = Resource(
-    **dataclasses.asdict(harrys_draft_holiday_request)
-)
-harrys_pending_holiday_request.attr["status"] = "PENDING_APPROVAL"
-
-# Harry's leave request that is now in APPROVED state
-harrys_approved_holiday_request = Resource(
-    **dataclasses.asdict(harrys_draft_holiday_request)
-)
-harrys_approved_holiday_request.attr["status"] = "APPROVED"
 
 
 # Check whether the principal is allowed to perform a specific action on the given resource
@@ -106,8 +86,8 @@ def check(
             icon = emoji.emojize(":thumbs_up:")
 
         print(
-            f"{icon} {principal.id} {effect} {action} {resource.attr['owner']}'s "
-            f"{resource.attr['status']} holiday request"
+            f"{icon} {principal.id} {effect} {action} on "
+            f"{resource.kind} {resource.id}"
         )
     except Exception as e:
         print(f"Request failed: {e}")
@@ -119,47 +99,37 @@ if __name__ == "__main__":
     container = CerbosContainer()
     policy_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "policies")
     container.with_volume_mapping(policy_dir, "/policies")
-
+    print('ok got policies')
     with container:
         container.wait_until_ready()
         host = container.http_host()
 
         # Create a Cerbos client
         with CerbosClient(host) as client:
-            # Check access to Harry's draft holiday request
+            # Check access to Account 7123
+            print("\nCheck access to Account 7123\n")
             for principal, action in [
-                (harry, "create"),
-                (harry, "view"),
-                (pedro, "view"),
-                (maggie, "view"),
-                (amanda, "view"),
+                (jess, "create"),
+                (jess, "read"),
+                (maggie, "read"),
                 (maggie, "approve"),
-                (amanda, "approve"),
-                (harry, "submit"),
+                (jess, "approve"),
+                (jess, "submit"),
             ]:
-                check(client, principal, action, harrys_draft_holiday_request)
+                check(client, principal, action, account_7123)
 
-            # Check access to Harry's pending holiday request
-            print("\nHarry submits his holiday request\n")
+            # Check access to Payee 8
+            print("\nCheck access to Payee 8\n")
 
             for principal, action in [
-                (harry, "view"),
-                (harry, "approve"),
-                (pedro, "view"),
-                (amanda, "view"),
-                (maggie, "view"),
-                (amanda, "approve"),
-                (maggie, "approve"),
+                (jess, "read"),
+                (jess, "create"),
+                (jess, "update"),
+                (maggie, "read"),
+                (maggie, "update"),
+                (machine, "read"),
+                (machine, "create"),
+                (machine, "update"),
+                (todd, "update")
             ]:
-                check(client, principal, action, harrys_pending_holiday_request)
-
-            # Check access to Harry's approved holiday request
-            print("\nMaggie approves Harry's holiday request\n")
-
-            for principal, action in [
-                (harry, "view"),
-                (pedro, "view"),
-                (amanda, "view"),
-                (maggie, "view"),
-            ]:
-                check(client, principal, action, harrys_approved_holiday_request)
+                check(client, principal, action, payee_8)

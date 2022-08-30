@@ -5,6 +5,11 @@ Run the following command to try out the demo:
 ```shell
 ./pw demo
 ```
+OR
+```
+pdm install
+pdm run python main.py
+```
 
 The demo script (`main.py`) starts a new Cerbos container with the policies from the `policies` directory and sends requests for a set of different principals and resources to demonstrate how policy evaluation works.
 
