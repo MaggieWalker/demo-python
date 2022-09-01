@@ -9,7 +9,6 @@
 # Licensed under the MIT license                                                 #
 ##################################################################################
 import argparse
-from bdb import set_trace
 import os
 import subprocess
 import sys

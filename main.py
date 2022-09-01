@@ -9,65 +9,8 @@ from cerbos.sdk.client import CerbosClient
 from cerbos.sdk.container import CerbosContainer
 from cerbos.sdk.model import *
 
-# Define the principals and resources we are going to use in the demo.
-
-jess = Principal(
-    id="jess",
-    roles={"documents_payee_management"},
-    attr={
-            "account": 
-                {
-                    "id": "7123"
-                },
-        },
-)
-
-maggie = Principal(
-    id="maggie",
-    roles={"internal_employee",},
-    attr={"team": "permissions_platform"},
-)
-
-todd = Principal(
-    id="todd",
-    roles={"updater"},
-    attr={
-            "account": 
-                {
-                    "id": "7123"
-                },
-        },
-)
-
-machine = Principal(
-    id="machine12345",
-    roles={"abacus_machine"},
-    attr={
-        "group": "MachineGroup_Abacus"
-    }
-)
-
-account_7123 = Resource(
-    id="account7123",
-    kind="account",
-    attr={"account": 
-            {
-                "id": "7123"
-            }
-        },
-)
-
-payee_8 = Resource(
-    id="payee8",
-    kind="payee",
-    attr={ 
-            "payee_id": "8",
-            "account": 
-            {
-                "id": "7123"
-            }
-        },
-)
+from principals import principals
+from resources import resources
 
 
 # Check whether the principal is allowed to perform a specific action on the given resource
@@ -80,7 +23,6 @@ def check(
     try:
         effect = "_cannot_"
         icon = emoji.emojize(":cross_mark:")
-
         if client.is_allowed(action=action, principal=principal, resource=resource):
             effect = "_can_"
             icon = emoji.emojize(":thumbs_up:")
@@ -99,7 +41,7 @@ if __name__ == "__main__":
     container = CerbosContainer()
     policy_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), "policies")
     container.with_volume_mapping(policy_dir, "/policies")
-    print('ok got policies')
+
     with container:
         container.wait_until_ready()
         host = container.http_host()
@@ -109,27 +51,43 @@ if __name__ == "__main__":
             # Check access to Account 7123
             print("\nCheck access to Account 7123\n")
             for principal, action in [
-                (jess, "create"),
-                (jess, "read"),
-                (maggie, "read"),
-                (maggie, "approve"),
-                (jess, "approve"),
-                (jess, "submit"),
+                (principals.jess, "create"),
+                (principals.jess, "read"),
+                (principals.maggie, "read"),
+                (principals.maggie, "approve"),
+                (principals.jess, "approve"),
+                (principals.jess, "submit"),
             ]:
-                check(client, principal, action, account_7123)
+                check(client, principal, action, resources.account_7777)
 
             # Check access to Payee 8
             print("\nCheck access to Payee 8\n")
 
             for principal, action in [
-                (jess, "read"),
-                (jess, "create"),
-                (jess, "update"),
-                (maggie, "read"),
-                (maggie, "update"),
-                (machine, "read"),
-                (machine, "create"),
-                (machine, "update"),
-                (todd, "update")
+                (principals.jess, "read"),
+                (principals.jess, "create"),
+                (principals.jess, "update"),
+                (principals.maggie, "read"),
+                (principals.maggie, "update"),
+                (principals.machine, "read"),
+                (principals.machine, "create"),
+                (principals.machine, "update"),
+                (principals.todd, "update")
             ]:
-                check(client, principal, action, payee_8)
+                check(client, principal, action, resources.payee_8)
+            
+            print("\nCheck access to top secret product\n")
+
+            for principal, action in [
+                (principals.maggie, "read"),
+                (principals.maggie, "review")
+            ]:
+                check(client, principal, action, resources.top_secret_product)
+            
+            print("\nCheck access to NOT secret product\n")
+
+            for principal, action in [
+                (principals.maggie, "read"),
+                (principals.maggie, "review")
+            ]:
+                check(client, principal, action, resources.not_secret_product)
