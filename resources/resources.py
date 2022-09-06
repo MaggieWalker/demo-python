@@ -3,40 +3,168 @@ from cerbos.sdk.model import *
 
 # Define the resources we are going to use in the demo.
 
-account_7777 = Resource(
-    id="account7777",
+# Accounts
+account_1 = Resource(
+    id="account1",
     kind="account",
-    attr={"account": 
-            {
-                "id": "7777"
-            }
-        },
-)
-
-payee_8 = Resource(
-    id="payee8",
-    kind="payee",
-    attr={ 
-            "payee_id": "8",
-            "account": 
-            {
-                "id": "7123"
-            }
-        },
-)
-
-top_secret_product = Resource(
-    id="secret4000",
-    kind="product",
     attr={
-        "security_clearance": "top_secret"
+        "account_id": "1"
+    },
+)
+
+account_999 = Resource(
+    id="account999",
+    kind="account",
+    attr={
+        "account_id": "999"
+    },
+)
+
+account_888 = Resource(
+    id="account888",
+    kind="account",
+    attr={
+        "account_id": "888"
+    },
+)
+
+#Contracts
+contract_1 = Resource(
+    id="contract1",
+    kind="contract",
+    attr={
+        "account_id": "1"
+    },
+)
+
+contract_999 = Resource(
+    id="contract999",
+    kind="contract",
+    attr={
+        "account_id": "999"
     }
 )
 
-not_secret_product = Resource(
-    id="notsecret4000",
-    kind="product",
+contract_888 = Resource(
+    id="contract888",
+    kind="contract",
     attr={
-        "security_clearance": "normal"
-    },
+        "account_id": "888"
+    }
+)
+
+#Account Payees
+account_payee_1 = Resource(
+    id="accountpayee1",
+    kind="account_payee",
+    attr={ 
+            "account_id": "1",
+    }
+)
+
+account_payee_999 = Resource(
+    id="accountpayee999",
+    kind="account_payee",
+    attr={ 
+            "account_id": "999",
+    }
+)
+
+account_payee_888 = Resource(
+    id="accountpayee888",
+    kind="account_payee",
+    attr={ 
+            "account_id": "888",
+    }
+)
+
+#Content
+content_digital_888 = Resource(
+    id="contentdigital888",
+    kind="content",
+    attr={
+        "account_id": "888",
+        "content_type": "digital_audio"
+    }
+)
+
+content_performance_888 = Resource(
+    id="contentperformance888",
+    kind="content",
+    attr={
+        "account_id": "888",
+        "content_type": "performance/neighboring_rights"
+    }
+)
+
+content_digital_999 = Resource(
+    id="contentdigital999",
+    kind="content",
+    attr={
+        "account_id": "999",
+        "content_type": "digital_audio"
+    }
+)
+
+content_physical_999 = Resource(
+    id="contentphysical999",
+    kind="content",
+    attr={
+        "account_id": "999",
+        "content_type": "physical_audio"
+    }
+)
+
+content_digital_1 = Resource(
+    id="contentdigital1",
+    kind="content",
+    attr={
+        "account_id": "1",
+        "content_type": "digital_audio"
+    }
+)
+# top_secret_product = Resource(
+#     id="secret4000",
+#     kind="content",
+#     attr={
+#         "security_clearance": "top_secret",
+#         "content_type": "digital"
+#     }
+# )
+
+# not_secret_product = Resource(
+#     id="notsecret4000",
+#     kind="content",
+#     attr={
+#         "security_clearance": "normal",
+#         "content_type": "physical"
+#     },
+# )
+
+#Analytics
+analytics_public_888 = Resource(
+    id="analyticspublic888",
+    kind="analytics",
+    attr={
+        "account_id": "888",
+        "is_public": True
+    }
+)
+
+analytics_public_999 = Resource(
+    id="analyticspublic999",
+    kind="analytics",
+    attr={
+        "account_id": "999",
+        "is_public": True
+    }
+)
+
+analytics_not_public_999 = Resource(
+    id="analyticsnotpublic999",
+    kind="analytics",
+    attr={
+        "account_id": "999",
+        "is_public": False
+    }
 )

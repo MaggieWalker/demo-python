@@ -1,0 +1,33 @@
+---
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  version: "default"
+
+  resource: account
+  rules:
+  - actions: ["view", "edit"]
+    roles:
+    - AbacusProfile_contract_admin
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        any:
+          of:
+          # this role can view the account if they are * access or under the same account
+            - expr: request.principal.attr.account_id == '*'
+            - expr: request.resource.attr.account_id == request.principal.attr.account_id
+  
+  - actions: ["view"]
+    roles:
+    - AbacusProfile_royalties
+    - DocumentsProfile_documents_payee_management
+    - ContentProfile_content_manager_digital_audio
+    - InsightsProfile_analytics_digital_audio
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        any:
+          of:
+          # this role can view the account if they are * access or under the same account
+            - expr: request.principal.attr.account_id == '*'
+            - expr: request.resource.attr.account_id == request.principal.attr.account_id

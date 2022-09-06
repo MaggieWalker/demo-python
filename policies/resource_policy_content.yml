@@ -7,7 +7,7 @@ resourcePolicy:
   - content_derived_roles
 
   resource: product
-  rules:
+  # rules:
   # - actions: ["read"]
   #   roles:
   #   - content_viewer
@@ -15,34 +15,31 @@ resourcePolicy:
   #   condition:
   #     match:
   #       expr: request.principal.attr.account.id == request.resource.attr.account.id
-  
 
-  - actions: ["create"]
-    roles:
-    - content_creator
-    effect: EFFECT_ALLOW
-    condition:
-      match:
-        expr: request.principal.attr.account.id == request.resource.attr.account.id
-        # expr: request.principal.attr.content_type == request.resource.attr.content_type
+  # - actions: ["read"]
+  #   roles:
+  #   - internal_employee
+  #   effect: EFFECT_ALLOW
+  #   condition: &not_top_secret
+  #     match:
+  #       any:
+  #         of:
+  #         # Check if there is a security_clearance attribute at all, and if so, if it's top secret
+  #           - expr: >
+  #               ! ("security_clearance" in request.resource.attr)
+  #           - expr: request.resource.attr.security_clearance != "top_secret" 
 
+  # - actions: ["create"]
+  #   roles:
+  #   - content_creator
+  #   effect: EFFECT_ALLOW
+  #   condition:
+  #     match:
+  #       expr: request.principal.attr.account.id == request.resource.attr.account.id
 
-  - actions: ["read"]
-    roles:
-    - internal_employee
-    effect: EFFECT_ALLOW
-    condition: &not_top_secret
-      match:
-        any:
-          of:
-          # Check if there is a security_clearance attribute at all, and if so, if it's top secret
-            - expr: >
-                ! ("security_clearance" in request.resource.attr)
-            - expr: request.resource.attr.security_clearance != "top_secret" 
-
-  - actions: ["review"]
-    roles:
-    - internal_employee
-    effect: EFFECT_ALLOW
-    condition:
-      <<: *not_top_secret
+  # - actions: ["review"]
+  #   roles:
+  #   - internal_employee
+  #   effect: EFFECT_ALLOW
+  #   condition:
+  #     <<: *not_top_secret

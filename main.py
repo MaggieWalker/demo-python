@@ -48,46 +48,31 @@ if __name__ == "__main__":
 
         # Create a Cerbos client
         with CerbosClient(host) as client:
-            # Check access to Account 7123
-            print("\nCheck access to Account 7123\n")
+            # Check access to Accounts
+            print("\nCheck access to Account 1\n")
             for principal, action in [
-                (principals.jess, "create"),
-                (principals.jess, "read"),
-                (principals.maggie, "read"),
-                (principals.maggie, "approve"),
-                (principals.jess, "approve"),
-                (principals.jess, "submit"),
+                (principals.Michelle, "view"),
+                (principals.Michelle, "edit"),
+                (principals.Elaine, "view"),
+                (principals.Elaine, "edit"),
+                (principals.Oliver, "view"),
+                (principals.Oliver, "edit")
             ]:
-                check(client, principal, action, resources.account_7777)
+                check(client, principal, action, resources.account_1)
 
-            # Check access to Payee 8
-            print("\nCheck access to Payee 8\n")
-
+            print("\nCheck access to Account 999\n")
             for principal, action in [
-                (principals.jess, "read"),
-                (principals.jess, "create"),
-                (principals.jess, "update"),
-                (principals.maggie, "read"),
-                (principals.maggie, "update"),
-                (principals.machine, "read"),
-                (principals.machine, "create"),
-                (principals.machine, "update"),
-                (principals.todd, "update")
+                (principals.Oliver, "view"),
+                (principals.Oliver, "edit")
             ]:
-                check(client, principal, action, resources.payee_8)
-            
-            print("\nCheck access to top secret product\n")
+                check(client, principal, action, resources.account_999)
 
-            for principal, action in [
-                (principals.maggie, "read"),
-                (principals.maggie, "review")
-            ]:
-                check(client, principal, action, resources.top_secret_product)
-            
-            print("\nCheck access to NOT secret product\n")
 
+            print("\nCheck access to Account 888\n")
             for principal, action in [
-                (principals.maggie, "read"),
-                (principals.maggie, "review")
+                (principals.Paul, "view"),
+                (principals.Paul, "edit"),
+                (principals.Nate, "view"),
+                (principals.Nate, "edit")
             ]:
-                check(client, principal, action, resources.not_secret_product)
+                check(client, principal, action, resources.account_888)
