@@ -28,6 +28,14 @@ account_888 = Resource(
     },
 )
 
+account_222 = Resource(
+    id="account222",
+    kind="account",
+    attr={
+        "account_id": "222"
+    }
+)
+
 #Contracts
 contract_1 = Resource(
     id="contract1",
@@ -93,7 +101,7 @@ content_performance_888 = Resource(
     kind="content",
     attr={
         "account_id": "888",
-        "content_type": "performance/neighboring_rights"
+        "content_type": "sr_performance"
     }
 )
 
@@ -123,23 +131,6 @@ content_digital_1 = Resource(
         "content_type": "digital_audio"
     }
 )
-# top_secret_product = Resource(
-#     id="secret4000",
-#     kind="content",
-#     attr={
-#         "security_clearance": "top_secret",
-#         "content_type": "digital"
-#     }
-# )
-
-# not_secret_product = Resource(
-#     id="notsecret4000",
-#     kind="content",
-#     attr={
-#         "security_clearance": "normal",
-#         "content_type": "physical"
-#     },
-# )
 
 #Analytics
 analytics_public_888 = Resource(
@@ -168,3 +159,25 @@ analytics_not_public_999 = Resource(
         "is_public": False
     }
 )
+
+RESOURCES = [
+    account_1,
+    account_999,
+    account_888,
+    account_222,
+    contract_1,
+    contract_999,
+    contract_888,
+    account_payee_1,
+    account_payee_999,
+    account_payee_888,
+    content_digital_888,
+    content_performance_888,
+    content_digital_999,
+    content_physical_999,
+    content_digital_1,
+    analytics_public_888,
+    analytics_public_999,
+    analytics_not_public_999
+
+]

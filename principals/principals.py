@@ -10,7 +10,11 @@ Michelle = Principal(
     },
     attr={
         "profiles": ["Abacus"],
-        "account_id": '*'
+        "accounts": {
+            "*": {
+                "content_type": ["*"]
+            }
+        }
     }
 )
 
@@ -21,7 +25,11 @@ Elaine = Principal(
     },
     attr={
         "profiles": ["Abacus"],
-        "account_id": '*'
+        "accounts": {
+            "*": {
+                "content_type": ["*"]
+            }
+        }
     }
 )
 
@@ -29,23 +37,46 @@ Oliver = Principal(
     id="Oliver",
     roles={
         "DocumentsProfile_documents_payee_management",
-        "ContentProfile_content_manager_digital_audio"
+        "ContentProfile_label_artist_user_digital_audio"
     },
     attr={
         "profiles": ["Documents"],
-        "account_id": '999'
+        "accounts": {
+            "999": {
+                "content_type": ["digital_audio"]
+            }
+        }
+    }
+)
+
+Conrad = Principal(
+    id="Conrad",
+    roles={
+        "ContentProfile_distribution_reviewer_digital_audio"
+    },
+    attr={
+        "profiles": ["Content"],
+        "accounts": {
+            "*": {
+                "content_type": ["*"]
+            }
+        }
     }
 )
 
 Paul = Principal(
     id="Paul",
     roles={
-        "ContentProfile_content_manager_digital_audio",
+        "ContentProfile_label_artist_user_digital_audio",
         "ContentProfile_content_manager_performance_neighbouring_rights"
     },
     attr={
         "profiles": ["Content"],
-        "account_id": '888'
+        "accounts": {
+            "888": {
+                "content_type": ["digital_audio", "sr_performance"]
+            }
+        }
     }
 )
 
@@ -56,20 +87,17 @@ Allan = Principal(
     },
     attr={
         "profiles": ["Content"],
-        "account_id": '888'
+        "accounts": {
+            "888": {
+                "content_type": ["sr_performance"]
+            },
+            "222": {
+                "content_type": ["digital_audio"]
+            }
+        }
     }
 )
 
-Conrad = Principal(
-    id="Conrad",
-    roles={
-        "ContentProfile__content_reviewer_digital_audio"
-    },
-    attr={
-        "profiles": ["Content"],
-        "account_id": '*'
-    }
-)
 
 Nate = Principal(
     id="Nate",
@@ -79,6 +107,12 @@ Nate = Principal(
     },
     attr={
         "profiles": ["Insights"],
-        "account_id": '888'
+        "accounts": {
+            "888": {
+                "content_type": ["digital_audio", "sr_performance"]
+            }
+        }
     }
 )
+
+PRINCIPALS = [Michelle, Elaine, Oliver, Conrad, Paul, Allan, Nate]
