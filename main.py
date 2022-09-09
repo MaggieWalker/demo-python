@@ -21,10 +21,10 @@ def check(
     resource: Resource,
 ):
     try:
-        effect = "is not allowed to"
+        effect = "_cannot_"
         icon = emoji.emojize(":cross_mark:")
         if client.is_allowed(action=action, principal=principal, resource=resource):
-            effect = "is allowed to"
+            effect = "_can_"
             icon = emoji.emojize(":thumbs_up:")
 
         print(
