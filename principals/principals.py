@@ -6,7 +6,7 @@ from cerbos.sdk.model import *
 Michelle = Principal(
     id="Michelle",
     roles={
-        "AbacusProfile_contract_admin"
+        "Abacus_contract_admin"
     },
     attr={
         "profiles": ["Abacus"],
@@ -21,7 +21,7 @@ Michelle = Principal(
 Elaine = Principal(
     id="Elaine",
     roles={
-        "AbacusProfile_royalties"
+        "Abacus_royalties"
     },
     attr={
         "profiles": ["Abacus"],
@@ -36,8 +36,8 @@ Elaine = Principal(
 Oliver = Principal(
     id="Oliver",
     roles={
-        "DocumentsProfile_documents_payee_management",
-        "ContentProfile_label_artist_user_digital_audio"
+        "Documents_documents_payee_management",
+        "Content_label_artist_user_digital_audio"
     },
     attr={
         "profiles": ["Documents"],
@@ -52,7 +52,7 @@ Oliver = Principal(
 Conrad = Principal(
     id="Conrad",
     roles={
-        "ContentProfile_distribution_reviewer_digital_audio"
+        "Content_distribution_reviewer_digital_audio"
     },
     attr={
         "profiles": ["Content"],
@@ -67,8 +67,8 @@ Conrad = Principal(
 Paul = Principal(
     id="Paul",
     roles={
-        "ContentProfile_label_artist_user_digital_audio",
-        "ContentProfile_content_manager_performance_neighbouring_rights"
+        "Content_label_artist_user_digital_audio",
+        "Content_content_manager_performance_neighbouring_rights"
     },
     attr={
         "profiles": ["Content"],
@@ -83,7 +83,7 @@ Paul = Principal(
 Allan = Principal(
     id="Allan",
     roles={
-        "ContentProfile_content_manager_performance_neighbouring_rights"
+        "Content_content_manager_performance_neighbouring_rights"
     },
     attr={
         "profiles": ["Content"],
@@ -102,8 +102,8 @@ Allan = Principal(
 Nate = Principal(
     id="Nate",
     roles={
-        "InsightsProfile_analytics_digital_audio",
-        "InsightsProfile_analytics_performance_neighbouring_rights"
+        "Insights_analytics_digital_audio",
+        "Insights_analytics_performance_neighbouring_rights"
     },
     attr={
         "profiles": ["Insights"],

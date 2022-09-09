@@ -7,7 +7,7 @@ resourcePolicy:
   rules:
   - actions: ["view", "edit"]
     roles:
-    - AbacusProfile_contract_admin
+    - Abacus_contract_admin
     effect: EFFECT_ALLOW
     condition:
       match:
@@ -20,11 +20,11 @@ resourcePolicy:
   
   - actions: ["view"]
     roles:
-    - AbacusProfile_royalties
-    - DocumentsProfile_documents_payee_management
-    - ContentProfile_label_artist_user_digital_audio
-    - InsightsProfile_analytics_digital_audio
-    - ContentProfile_content_manager_performance_neighbouring_rights
+    - Abacus_royalties
+    - Documents_documents_payee_management
+    - Content_label_artist_user_digital_audio
+    - Insights_analytics_digital_audio
+    - Content_content_manager_performance_neighbouring_rights
     effect: EFFECT_ALLOW
     condition:
       match:

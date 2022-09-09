@@ -8,8 +8,8 @@ resourcePolicy:
 
   - actions: ["view"]
     roles:
-    - ContentProfile_label_artist_user_digital_audio
-    - ContentProfile_distribution_reviewer_digital_audio
+    - Content_label_artist_user_digital_audio
+    - Content_distribution_reviewer_digital_audio
     effect: EFFECT_ALLOW
     condition:
       match: &not_top_secret
@@ -22,7 +22,7 @@ resourcePolicy:
 
   - actions: ["edit"]
     roles:
-    - ContentProfile_label_artist_user_digital_audio
+    - Content_label_artist_user_digital_audio
     effect: EFFECT_ALLOW
     condition: 
       match:
@@ -33,7 +33,7 @@ resourcePolicy:
 
   - actions: ["view", "edit"]
     roles:
-    - ContentProfile_content_manager_performance_neighbouring_rights
+    - Content_content_manager_performance_neighbouring_rights
     effect: EFFECT_ALLOW
     condition:
       match:
