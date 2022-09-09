@@ -5,113 +5,152 @@ from cerbos.sdk.model import *
 
 Michelle = Principal(
     id="Michelle",
-    roles={
-        "AbacusProfile_contract_admin"
-    },
+    roles={},
     attr={
-        "profiles": ["Abacus"],
-        "accounts": {
-            "*": {
-                "content_type": ["*"]
+        "type": "human",
+        "apps": ["Abacus"],
+        "tenants": [
+            {
+                "account_id": "*",
+                "attachments": [
+                    {
+                        "role": "Abacus_contract_admin"
+                    }
+                ]
             }
-        }
+        ]
     }
 )
 
 Elaine = Principal(
     id="Elaine",
-    roles={
-        "AbacusProfile_royalties"
-    },
+    roles={},
     attr={
-        "profiles": ["Abacus"],
-        "accounts": {
-            "*": {
-                "content_type": ["*"]
+        "type": "human",
+        "apps": ["Abacus"],
+        "tenants": [
+            {
+                "account_id": "*",
+                "attachments": [
+                    {
+                        "role": "Abacus_royalties"
+                    }
+                ]
             }
-        }
+        ]
     }
 )
 
 Oliver = Principal(
     id="Oliver",
-    roles={
-        "DocumentsProfile_documents_payee_management",
-        "ContentProfile_label_artist_user_digital_audio"
-    },
+    roles={},
     attr={
-        "profiles": ["Documents"],
-        "accounts": {
-            "999": {
-                "content_type": ["digital_audio"]
+        "type": "human",
+        "apps": ["Documents", "Content"],
+        "tenants": [
+            {
+                "account_id": "999",
+                "attachments": [
+                    {
+                        "role": "Documents_documents_payee_management"
+                    },
+                    {
+                        "role": "Content_label_artist_user",
+                        "content_types": ["digital_audio"]
+                    },
+                ]
             }
-        }
+        ]
     }
 )
 
 Conrad = Principal(
     id="Conrad",
-    roles={
-        "ContentProfile_distribution_reviewer_digital_audio"
-    },
+    roles={},
     attr={
-        "profiles": ["Content"],
-        "accounts": {
-            "*": {
-                "content_type": ["*"]
+        "type": "human",
+        "apps": ["Content"],
+        "tenants": [
+            {
+                "account_id": "*",
+                "attachments": [
+                    {
+                        "role": "Content_distribution_reviewer",
+                        "content_types": ["digital_audio"]
+                    }
+                ]
             }
-        }
+        ]
     }
 )
 
 Paul = Principal(
     id="Paul",
-    roles={
-        "ContentProfile_label_artist_user_digital_audio",
-        "ContentProfile_content_manager_performance_neighbouring_rights"
-    },
+    roles={},
     attr={
-        "profiles": ["Content"],
-        "accounts": {
-            "888": {
-                "content_type": ["digital_audio", "sr_performance"]
+        "type": "human",
+        "apps": ["Content"],
+        "tenants": [
+            {
+                "account_id": "888",
+                "attachments": [
+                    {
+                        "role": "Content_label_artist_user",
+                        "content_types": ["digital_audio", "sr_performance"]
+                    }
+                ]
             }
-        }
+        ]
     }
 )
 
 Allan = Principal(
     id="Allan",
-    roles={
-        "ContentProfile_content_manager_performance_neighbouring_rights"
-    },
+    roles={},
     attr={
+        "type": "human",
         "profiles": ["Content"],
-        "accounts": {
-            "888": {
-                "content_type": ["sr_performance"]
+        "tenants": [
+            {
+                "account_id": "888",
+                "attachments": [
+                    {
+                        "role": "Content_label_artist_user",
+                        "content_types": ["sr_performance"]
+                    }
+                ]
             },
-            "222": {
-                "content_type": ["digital_audio"]
-            }
-        }
+            {
+                "account_id": "222",
+                "attachments": [
+                    {
+                        "role": "Content_label_artist_user",
+                        "content_types": ["digital_audio"]
+                    }
+                ]
+            },
+        ]
     }
 )
 
 
 Nate = Principal(
     id="Nate",
-    roles={
-        "InsightsProfile_analytics_digital_audio",
-        "InsightsProfile_analytics_performance_neighbouring_rights"
-    },
+    roles={},
     attr={
-        "profiles": ["Insights"],
-        "accounts": {
-            "888": {
-                "content_type": ["digital_audio", "sr_performance"]
+        "type": "human",
+        "apps": ["Insights"],
+        "tenants": [
+            {
+                "account_id": "888",
+                "attachments": [
+                    {
+                        "role": "Insights_analytics",
+                        "content_types": ["digital_audio", "sr_performance"]
+                    }
+                ]
             }
-        }
+        ]
     }
 )
 

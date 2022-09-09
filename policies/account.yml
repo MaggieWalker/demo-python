@@ -1,0 +1,39 @@
+# yaml-language-server: $schema=https://api.cerbos.dev/latest/cerbos/policy/v1/Policy.schema.json
+---
+apiVersion: api.cerbos.dev/v1
+variables:
+  is_vendor_star: P.attr.tenants.exists_one(t, t.account_id == "*")
+resourcePolicy:
+  version: "default"
+  resource: account
+  schemas:
+    principalSchema: 
+      ref: cerbos:///principal.json
+    resourceSchema: 
+      ref: cerbos:///account.json
+      ignoreWhen: 
+        actions: ["create"]
+  rules:
+  # If you have vendor*, regardless of role, you can view account
+  - actions: ["view"]
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        expr: variables.is_vendor_star
+
+  # If you have vendor* and the Abacus_contract_admin role, you can edit the account
+  - actions: ["edit"]
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        all:
+          of:
+            - expr: variables.is_vendor_star
+            - expr: P.attr.tenants.exists_one(t, t.account_id == "*" && t.attachments.exists_one(s, s.role == "Abacus_contract_admin"))
+  
+  # If you have the account attached as a tenant, regardless of role, you can view account
+  - actions: ["view"]
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        expr: P.attr.tenants.exists_one(t, t.account_id == request.resource.attr.account_id)

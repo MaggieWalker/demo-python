@@ -1,0 +1,76 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "required": ["type", "apps", "tenants"],
+    "type": "object",
+    "properties": {
+        "type": {
+            "type": "string",
+            "enum": ["machine", "human", "dancer"]
+        },
+        "apps": {
+            "type": "array",
+            "items": {
+                "type": "string",
+                "enum": [
+                    "Abacus",
+                    "Content",
+                    "Distribution",
+                    "Insights",
+                    "Settings"
+                ]
+            }
+        },
+        "tenants": {
+            "type": "array",
+            "items": {
+                "$ref": "#/$defs/tenant"
+            }
+        }
+    },
+    "$defs": {
+        "tenant": {
+            "type": "object",
+            "required": [ "account_id", "attachments"],
+            "properties": {
+                "account_id": {
+                    "type": "string",
+                    "description": "The account id or *"
+                },
+                "subaccount_id": {
+                    "type": "string",
+                    "description": "The subaccount id or null"
+                },
+                "label_participant_id": {
+                    "type": "string",
+                    "description": "The label participant id or null"
+                },
+                "attachments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/$defs/attachment"
+                    }
+                }
+            }
+        },
+        "attachment": {
+            "type": "object",
+            "required": ["role"],
+            "properties": {
+                "role": {
+                    "type": "string"
+                },
+                "content_types": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "enum": [
+                            "digital_audio",
+                            "physical_audio",
+                            "sr_performance"
+                        ]
+                    }
+                }
+            }
+        }
+    }
+}
