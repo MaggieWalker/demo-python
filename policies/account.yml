@@ -14,26 +14,28 @@ resourcePolicy:
       ignoreWhen: 
         actions: ["create"]
   rules:
-  # If you have vendor*, regardless of role, you can view account
-  - actions: ["view"]
+  - name: vendor_star_can_view_any
+    actions: ["view"]
+    roles: ["user"]
     effect: EFFECT_ALLOW
     condition:
       match:
-        expr: variables.is_vendor_star
+        expr: V.is_vendor_star
 
-  # If you have vendor* and the Abacus_contract_admin role, you can edit the account
-  - actions: ["edit"]
+  - name: vendor_star_with_contract_admin_can_edit_any
+    actions: ["edit"]
+    roles: ["user"]
     effect: EFFECT_ALLOW
     condition:
       match:
         all:
           of:
-            - expr: variables.is_vendor_star
             - expr: P.attr.tenants.exists_one(t, t.account_id == "*" && t.attachments.exists_one(s, s.role == "Abacus_contract_admin"))
   
-  # If you have the account attached as a tenant, regardless of role, you can view account
-  - actions: ["view"]
+  - name: you_can_view_your_tenant_account
+    actions: ["view"]
+    roles: ["user"]
     effect: EFFECT_ALLOW
     condition:
       match:
-        expr: P.attr.tenants.exists_one(t, t.account_id == request.resource.attr.account_id)
+        expr: P.attr.tenants.exists_one(t, t.account_id == R.attr.account_id)

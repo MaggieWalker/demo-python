@@ -5,7 +5,7 @@ from cerbos.sdk.model import *
 
 Michelle = Principal(
     id="Michelle",
-    roles={},
+    roles={"user"},
     attr={
         "type": "human",
         "apps": ["Abacus"],
@@ -24,7 +24,7 @@ Michelle = Principal(
 
 Elaine = Principal(
     id="Elaine",
-    roles={},
+    roles={"user"},
     attr={
         "type": "human",
         "apps": ["Abacus"],
@@ -43,7 +43,7 @@ Elaine = Principal(
 
 Oliver = Principal(
     id="Oliver",
-    roles={},
+    roles={"user"},
     attr={
         "type": "human",
         "apps": ["Documents", "Content"],
@@ -52,7 +52,7 @@ Oliver = Principal(
                 "account_id": "999",
                 "attachments": [
                     {
-                        "role": "Documents_documents_payee_management"
+                        "role": "Documents_payee_management"
                     },
                     {
                         "role": "Content_label_artist_user",
@@ -66,7 +66,7 @@ Oliver = Principal(
 
 Conrad = Principal(
     id="Conrad",
-    roles={},
+    roles={"user"},
     attr={
         "type": "human",
         "apps": ["Content"],
@@ -86,7 +86,7 @@ Conrad = Principal(
 
 Paul = Principal(
     id="Paul",
-    roles={},
+    roles={"user"},
     attr={
         "type": "human",
         "apps": ["Content"],
@@ -106,7 +106,7 @@ Paul = Principal(
 
 Allan = Principal(
     id="Allan",
-    roles={},
+    roles={"user"},
     attr={
         "type": "human",
         "profiles": ["Content"],
@@ -136,9 +136,9 @@ Allan = Principal(
 
 Nate = Principal(
     id="Nate",
-    roles={},
+    roles={"user"},
     attr={
-        "type": "human",
+        "type": "machine",
         "apps": ["Insights"],
         "tenants": [
             {
@@ -154,4 +154,12 @@ Nate = Principal(
     }
 )
 
-PRINCIPALS = [Michelle, Elaine, Oliver, Conrad, Paul, Allan, Nate]
+PRINCIPALS = [
+    Michelle,
+    Elaine,
+    Oliver,
+    Conrad,
+    Paul,
+    Allan,
+    Nate,
+]

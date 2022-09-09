@@ -21,10 +21,10 @@ def check(
     resource: Resource,
 ):
     try:
-        effect = "_cannot_"
+        effect = "is not allowed to"
         icon = emoji.emojize(":cross_mark:")
         if client.is_allowed(action=action, principal=principal, resource=resource):
-            effect = "_can_"
+            effect = "is allowed to"
             icon = emoji.emojize(":thumbs_up:")
 
         print(
@@ -33,8 +33,6 @@ def check(
         )
     except Exception as e:
         print(f"Request failed: {e}")
- 
-
 
 
 if __name__ == "__main__":
@@ -63,83 +61,7 @@ if __name__ == "__main__":
                         for action in ACTIONS:
                             num_checks += 1
                             check(client, principal, action, resource)
-                            # print_authorization_decision(principal, action, resource[0], resource[1])
                 print(f'Executed {num_checks} authorization checks')
-            
-            # Check every combination
+
             import timeit
             print(timeit.timeit("time_check()", number=1, setup="from __main__ import time_check"))
-            
-            
-            
-            # # Check access to Accounts
-            # print("\nCheck access to Account 1\n")
-            # for principal, action in [
-            #     (principals.Michelle, "view"),
-            #     (principals.Michelle, "edit"),
-            #     (principals.Elaine, "view"),
-            #     (principals.Elaine, "edit"),
-            #     (principals.Oliver, "view"),
-            #     (principals.Oliver, "edit")
-            # ]:
-            #     check(client, principal, action, resources.account_1)
-
-            # print("\nCheck access to Account 999\n")
-            # for principal, action in [
-            #     (principals.Oliver, "view"),
-            #     (principals.Oliver, "edit")
-            # ]:
-            #     check(client, principal, action, resources.account_999)
-
-
-            # print("\nCheck access to Account 888\n")
-            # for principal, action in [
-            #     (principals.Paul, "view"),
-            #     (principals.Paul, "edit"),
-            #     (principals.Nate, "view"),
-            #     (principals.Nate, "edit"),
-            #     (principals.Allan, "view")
-            # ]:
-            #     check(client, principal, action, resources.account_888)
-
-            # print("\nCheck access to Content Digital 888\n")
-            # for principal, action in [
-            #     (principals.Michelle, "view"),
-            #     (principals.Michelle, "edit"),
-            #     (principals.Elaine, "view"),
-            #     (principals.Elaine, "edit"),
-            #     (principals.Paul, "view"),
-            #     (principals.Paul, "edit"),
-            #     (principals.Allan, "view"),
-            #     (principals.Allan, "edit")
-            # ]:
-            #     check(client, principal, action, resources.content_digital_888)
-            
-            # print("\nCheck access to Content Performance 888\n")
-            # for principal, action in [
-            #     (principals.Allan, "view"),
-            #     (principals.Allan, "edit")
-            # ]:
-            #     check(client, principal, action, resources.content_performance_888)
-
-            # print("\nCheck access to Content Digital 999\n")
-            # for principal, action in [
-            #     (principals.Oliver, "view"),
-            #     (principals.Oliver, "edit")
-
-            # ]:
-            #     check(client, principal, action, resources.content_digital_999)
-
-            # print("\n Check access to a Top Secret Product")
-            # for principal, action in [
-            #     (principals.Paul, "view"),
-            #     (principals.Conrad, "view")
-            # ]:
-            #     check(client, principal, action, resources.top_secret_product)
-
-            # print("\n Check access to a NOT Top Secret Product")
-            # for principal, action in [
-            #     (principals.Paul, "view"),
-            #     (principals.Conrad, "view")
-            # ]:
-            #     check(client, principal, action, resources.not_secret_product)

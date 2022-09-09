@@ -1,52 +1,55 @@
-# # yaml-language-server: $schema=https://api.cerbos.dev/latest/cerbos/policy/v1/Policy.schema.json
-# ---
-# apiVersion: api.cerbos.dev/v1
-# resourcePolicy:
-#   version: "default"
-
-#   resource: content
-#   rules:
-
-#   - actions: ["view"]
-#     roles:
-#     - Content_label_artist_user_digital_audio
-#     - Content_distribution_reviewer_digital_audio
-#     effect: EFFECT_ALLOW
-#     condition:
-#       match: &not_top_secret
-#         any:
-#           of:
-#           # Check if there is a security_clearance attribute at all, and if so, if it's top secret
-#             - expr: >
-#                 ! ("security_clearance" in request.resource.attr)
-#             - expr: request.resource.attr.security_clearance != "top_secret"
-
-#   - actions: ["edit"]
-#     roles:
-#     - Content_label_artist_user_digital_audio
-#     effect: EFFECT_ALLOW
-#     condition: 
-#       match:
-#         all:
-#           of:
-#             - <<: *not_top_secret
-#             - expr: request.resource.attr.account_id in request.principal.attr.accounts
-
-#   - actions: ["view", "edit"]
-#     roles:
-#     - Content_content_manager_performance_neighbouring_rights
-#     effect: EFFECT_ALLOW
-#     condition:
-#       match:
-#         all:
-#           of:
-#             - expr: request.resource.attr.account_id in request.principal.attr.accounts
-#             - expr: request.principal.attr.accounts[request.resource.attr.account_id].content_type == request.resource.attr.content_type
+# yaml-language-server: $schema=https://api.cerbos.dev/latest/cerbos/policy/v1/Policy.schema.json
+---
+apiVersion: api.cerbos.dev/v1
+variables:
+  is_vendor_star: P.attr.tenants.exists_one(t, t.account_id == "*")
+  is_not_top_secret: R.attr.security_clearance != "top_secret"
+resourcePolicy:
+  version: "default"
+  resource: content
+  schemas:
+    principalSchema:
+      ref: cerbos:///principal.json
+  rules:
+  - name: vendor_star_can_view_any_not_secret
+    actions: ["view"]
+    roles: ["user"]
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        all:
+          of:
+            - expr: V.is_not_top_secret
+            - expr: V.is_vendor_star
   
-# # # Example of using a variable for a condition:
-# #   - actions: ["view"]
-# #     roles:
-# #     - internal_employee
-# #     effect: EFFECT_ALLOW
-# #     condition:
-# #       <<: *not_top_secret
+  - name: vendor_star_reviewer_by_content_type
+    actions: ["view", "review"]
+    roles: ["user"]
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        all:
+          of:
+            - expr: V.is_not_top_secret
+            - expr: P.attr.tenants.exists_one(t, t.account_id == "*" && t.attachments.exists_one(s, s.role == "Content_distribution_reviewer" && R.attr.content_type in s.content_types))
+
+  - name: tenant_content_manager
+    actions: ["view", "edit"]
+    roles: ["user"]
+    effect: EFFECT_ALLOW
+    condition: 
+      match:
+        all:
+          of:
+            # - expr: V.is_not_top_secret
+            - expr: P.attr.tenants.exists_one(t, t.account_id == R.attr.account_id && t.attachments.exists_one(s, s.role == "Content_label_artist_user" && R.attr.content_type in s.content_types))
+
+  # - actions: ["view"]
+  #   roles: ["user"]
+  #   effect: EFFECT_ALLOW
+  #   condition:
+  #     match:
+  #       all:
+  #         of:
+  #           - expr: R.attr.account_id in P.attr.accounts
+  #           - expr: P.attr.accounts[R.attr.account_id].content_type == R.attr.content_type
