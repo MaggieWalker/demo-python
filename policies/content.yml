@@ -2,7 +2,6 @@
 ---
 apiVersion: api.cerbos.dev/v1
 variables:
-  is_vendor_star: P.attr.tenants["*"] != null
   is_not_top_secret: R.attr.security_clearance != "top_secret"
 resourcePolicy:
   version: "default"
@@ -10,38 +9,35 @@ resourcePolicy:
   schemas:
     principalSchema:
       ref: cerbos:///principal.json
+  importDerivedRoles:
+    - multitenancy_roles
   rules:
   - name: vendor_star_can_view_any_not_secret
     actions: ["view"]
-    roles: ["user"]
+    derivedRoles: ["vendor_star"]
     effect: EFFECT_ALLOW
     condition:
       match:
-        all:
-          of:
-            - expr: V.is_not_top_secret
-            - expr: V.is_vendor_star
+        expr: V.is_not_top_secret
   
   - name: vendor_star_reviewer_by_content_type
     actions: ["view", "review"]
-    roles: ["user"]
+    derivedRoles: ["vendor_star"]
     effect: EFFECT_ALLOW
     condition:
       match:
         all:
           of:
             - expr: V.is_not_top_secret
-            - expr: V.is_vendor_star
             - expr: P.attr.tenants["*"].attachments.exists_one(t, t.role == "Content_distribution_reviewer" && R.attr.content_type in t.content_types)
 
   - name: tenant_content_manager
     actions: ["view", "edit"]
-    roles: ["user"]
+    derivedRoles: ["tenant"]
     effect: EFFECT_ALLOW
     condition: 
       match:
         all:
           of:
             # - expr: V.is_not_top_secret
-            - expr: R.attr.account_id in P.attr.tenants
             - expr: P.attr.tenants[R.attr.account_id].attachments.exists_one(t, t.role == "Content_label_artist_user" && R.attr.content_type in t.content_types)

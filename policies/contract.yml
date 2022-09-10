@@ -1,8 +1,6 @@
 # yaml-language-server: $schema=https://api.cerbos.dev/latest/cerbos/policy/v1/Policy.schema.json
 ---
 apiVersion: api.cerbos.dev/v1
-variables:
-  is_vendor_star: P.attr.tenants["*"] != null
 resourcePolicy:
   version: "default"
   resource: contract
@@ -11,37 +9,29 @@ resourcePolicy:
       ref: cerbos:///principal.json
     resourceSchema:
       ref: cerbos:///contract.json
-
+  importDerivedRoles:
+    - multitenancy_roles
   rules:
   - name: tenant_payee_management_can_manage
     actions: ["view", "edit"]
-    roles: ["user"]
+    derivedRoles: ["tenant"]
     effect: EFFECT_ALLOW
     condition:
       match:
-        all:
-          of:
-          - expr: R.attr.account_id in P.attr.tenants
-          - expr: P.attr.tenants[R.attr.account_id].attachments.exists_one(t, t.role == "Documents_payee_management")
+        expr: P.attr.tenants[R.attr.account_id].attachments.exists_one(t, t.role == "Documents_payee_management")
 
   - name: vendor_star_contract_admin_can_manage
     actions: ["view", "edit"]
-    roles: ["user"]
+    derivedRoles: ["vendor_star"]
     effect: EFFECT_ALLOW
     condition:
       match:
-        all:
-          of:
-          - expr: V.is_vendor_star
-          - expr: P.attr.tenants["*"].attachments.exists_one(t, t.role == "Abacus_contract_admin")
+        expr: P.attr.tenants["*"].attachments.exists_one(t, t.role == "Abacus_contract_admin")
 
   - name: vendor_star_abacus_can_view
     actions: ["view"]
-    roles: ["user"]
+    derivedRoles: ["vendor_star"]
     effect: EFFECT_ALLOW
     condition:
       match:
-        all:
-          of:
-          - expr: V.is_vendor_star
-          - expr: P.attr.tenants["*"].attachments.exists_one(t, t.role in ["Abacus_contract_admin", "Abacus_royalties"])
+        expr: P.attr.tenants["*"].attachments.exists_one(t, t.role in ["Abacus_contract_admin", "Abacus_royalties"])
