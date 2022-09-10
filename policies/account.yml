@@ -25,7 +25,7 @@ resourcePolicy:
     effect: EFFECT_ALLOW
     condition:
       match:
-        expr: P.attr.tenants["*"].attachments.exists_one(t, t.role == "Abacus_contract_admin")
+        expr: P.attr.tenants["*"].attachments["Abacus_contract_admin"] != null
   
   - name: you_can_view_your_tenant_account
     actions: ["view"]

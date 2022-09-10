@@ -12,11 +12,11 @@ Michelle = Principal(
         "tenants": {
             "*": {
                 "account_id": "*",
-                "attachments": [
-                    {
+                "attachments": {
+                    "Abacus_contract_admin": {
                         "role": "Abacus_contract_admin"
                     }
-                ]
+                }
             }
         }
     }
@@ -31,11 +31,11 @@ Elaine = Principal(
         "tenants": {
             "*": {
                 "account_id": "*",
-                "attachments": [
-                    {
+                "attachments": {
+                    "Abacus_royalties": {
                         "role": "Abacus_royalties"
                     }
-                ]
+                }
             }
         }
     }
@@ -50,15 +50,15 @@ Oliver = Principal(
         "tenants": {
             "999": {
                 "account_id": "999",
-                "attachments": [
-                    {
+                "attachments": {
+                    "Documents_payee_management": {
                         "role": "Documents_payee_management"
                     },
-                    {
+                    "Content_label_artist_user": {
                         "role": "Content_label_artist_user",
                         "content_types": ["digital_audio"]
                     },
-                ]
+                }
             }
         }
     }
@@ -73,12 +73,12 @@ Conrad = Principal(
         "tenants": {
             "*": {
                 "account_id": "*",
-                "attachments": [
-                    {
+                "attachments": {
+                    "Content_distribution_reviewer": {
                         "role": "Content_distribution_reviewer",
                         "content_types": ["digital_audio"]
                     }
-                ]
+                }
             }
         }
     }
@@ -93,12 +93,12 @@ Paul = Principal(
         "tenants": {
             "888": {
                 "account_id": "888",
-                "attachments": [
-                    {
+                "attachments": {
+                    "Content_label_artist_user": {
                         "role": "Content_label_artist_user",
                         "content_types": ["digital_audio", "sr_performance"]
                     }
-                ]
+                }
             }
         }
     }
@@ -113,21 +113,21 @@ Allan = Principal(
         "tenants": {
             "888": {
                 "account_id": "888",
-                "attachments": [
-                    {
+                "attachments": {
+                    "Content_label_artist_user": {
                         "role": "Content_label_artist_user",
                         "content_types": ["sr_performance"]
                     }
-                ]
+                }
             },
             "222": {
                 "account_id": "222",
-                "attachments": [
-                    {
+                "attachments": {
+                    "Content_label_artist_user": {
                         "role": "Content_label_artist_user",
                         "content_types": ["digital_audio"]
                     }
-                ]
+                }
             },
         }
     }
@@ -143,12 +143,12 @@ Nate = Principal(
         "tenants": {
             "888": {
                 "account_id": "888",
-                "attachments": [
-                    {
+                "attachments": {
+                    "Insights_analytics": {
                         "role": "Insights_analytics",
                         "content_types": ["digital_audio", "sr_performance"]
                     }
-                ]
+                }
             }
         }
     }

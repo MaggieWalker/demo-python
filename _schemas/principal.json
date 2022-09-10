@@ -46,8 +46,8 @@
                     "description": "The label participant id or null"
                 },
                 "attachments": {
-                    "type": "array",
-                    "items": {
+                    "type": "object",
+                    "additionalProperties": {
                         "$ref": "#/$defs/attachment"
                     }
                 }

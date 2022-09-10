@@ -18,7 +18,7 @@ resourcePolicy:
     effect: EFFECT_ALLOW
     condition:
       match:
-        expr: P.attr.tenants[R.attr.account_id].attachments.exists_one(t, t.role == "Documents_payee_management")
+        expr: P.attr.tenants[R.attr.account_id].attachments["Documents_payee_management"] != null
 
   - name: vendor_star_contract_admin_can_manage
     actions: ["view", "edit"]
@@ -26,7 +26,7 @@ resourcePolicy:
     effect: EFFECT_ALLOW
     condition:
       match:
-        expr: P.attr.tenants["*"].attachments.exists_one(t, t.role == "Abacus_contract_admin")
+        expr: P.attr.tenants["*"].attachments["Abacus_contract_admin"] != null
 
   - name: vendor_star_abacus_can_view
     actions: ["view"]
@@ -34,4 +34,4 @@ resourcePolicy:
     effect: EFFECT_ALLOW
     condition:
       match:
-        expr: P.attr.tenants["*"].attachments.exists_one(t, t.role in ["Abacus_contract_admin", "Abacus_royalties"])
+        expr: P.attr.tenants["*"].attachments["Abacus_royalties"] != null

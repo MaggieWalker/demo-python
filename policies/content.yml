@@ -29,7 +29,8 @@ resourcePolicy:
         all:
           of:
             - expr: V.is_not_top_secret
-            - expr: P.attr.tenants["*"].attachments.exists_one(t, t.role == "Content_distribution_reviewer" && R.attr.content_type in t.content_types)
+            - expr: P.attr.tenants["*"].attachments["Content_distribution_reviewer"] != null
+            - expr: R.attr.content_type in P.attr.tenants["*"].attachments["Content_distribution_reviewer"].content_types
 
   - name: tenant_content_manager
     actions: ["view", "edit"]
@@ -40,4 +41,5 @@ resourcePolicy:
         all:
           of:
             # - expr: V.is_not_top_secret
-            - expr: P.attr.tenants[R.attr.account_id].attachments.exists_one(t, t.role == "Content_label_artist_user" && R.attr.content_type in t.content_types)
+            - expr: P.attr.tenants[R.attr.account_id].attachments["Content_label_artist_user"] != null
+            - expr:  R.attr.content_type in P.attr.tenants[R.attr.account_id].attachments["Content_label_artist_user"].content_types
