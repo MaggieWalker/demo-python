@@ -2,7 +2,7 @@
 ---
 apiVersion: api.cerbos.dev/v1
 variables:
-  is_vendor_star: P.attr.tenants.exists_one(t, t.account_id == "*")
+  is_vendor_star: P.attr.tenants["*"] != null
 resourcePolicy:
   version: "default"
   resource: account
@@ -30,7 +30,8 @@ resourcePolicy:
       match:
         all:
           of:
-            - expr: P.attr.tenants.exists_one(t, t.account_id == "*" && t.attachments.exists_one(s, s.role == "Abacus_contract_admin"))
+            - expr: V.is_vendor_star
+            - expr: P.attr.tenants["*"].attachments.exists_one(t, t.role == "Abacus_contract_admin")
   
   - name: you_can_view_your_tenant_account
     actions: ["view"]
@@ -38,4 +39,4 @@ resourcePolicy:
     effect: EFFECT_ALLOW
     condition:
       match:
-        expr: P.attr.tenants.exists_one(t, t.account_id == R.attr.account_id)
+        expr: R.attr.account_id in P.attr.tenants

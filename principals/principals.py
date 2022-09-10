@@ -9,8 +9,8 @@ Michelle = Principal(
     attr={
         "type": "human",
         "apps": ["Abacus"],
-        "tenants": [
-            {
+        "tenants": {
+            "*": {
                 "account_id": "*",
                 "attachments": [
                     {
@@ -18,7 +18,7 @@ Michelle = Principal(
                     }
                 ]
             }
-        ]
+        }
     }
 )
 
@@ -28,8 +28,8 @@ Elaine = Principal(
     attr={
         "type": "human",
         "apps": ["Abacus"],
-        "tenants": [
-            {
+        "tenants": {
+            "*": {
                 "account_id": "*",
                 "attachments": [
                     {
@@ -37,7 +37,7 @@ Elaine = Principal(
                     }
                 ]
             }
-        ]
+        }
     }
 )
 
@@ -47,8 +47,8 @@ Oliver = Principal(
     attr={
         "type": "human",
         "apps": ["Documents", "Content"],
-        "tenants": [
-            {
+        "tenants": {
+            "999": {
                 "account_id": "999",
                 "attachments": [
                     {
@@ -60,7 +60,7 @@ Oliver = Principal(
                     },
                 ]
             }
-        ]
+        }
     }
 )
 
@@ -70,8 +70,8 @@ Conrad = Principal(
     attr={
         "type": "human",
         "apps": ["Content"],
-        "tenants": [
-            {
+        "tenants": {
+            "*": {
                 "account_id": "*",
                 "attachments": [
                     {
@@ -80,7 +80,7 @@ Conrad = Principal(
                     }
                 ]
             }
-        ]
+        }
     }
 )
 
@@ -90,8 +90,8 @@ Paul = Principal(
     attr={
         "type": "human",
         "apps": ["Content"],
-        "tenants": [
-            {
+        "tenants": {
+            "888": {
                 "account_id": "888",
                 "attachments": [
                     {
@@ -100,7 +100,7 @@ Paul = Principal(
                     }
                 ]
             }
-        ]
+        }
     }
 )
 
@@ -110,8 +110,8 @@ Allan = Principal(
     attr={
         "type": "human",
         "profiles": ["Content"],
-        "tenants": [
-            {
+        "tenants": {
+            "888": {
                 "account_id": "888",
                 "attachments": [
                     {
@@ -120,7 +120,7 @@ Allan = Principal(
                     }
                 ]
             },
-            {
+            "222": {
                 "account_id": "222",
                 "attachments": [
                     {
@@ -129,7 +129,7 @@ Allan = Principal(
                     }
                 ]
             },
-        ]
+        }
     }
 )
 
@@ -140,8 +140,8 @@ Nate = Principal(
     attr={
         "type": "machine",
         "apps": ["Insights"],
-        "tenants": [
-            {
+        "tenants": {
+            "888": {
                 "account_id": "888",
                 "attachments": [
                     {
@@ -150,7 +150,7 @@ Nate = Principal(
                     }
                 ]
             }
-        ]
+        }
     }
 )
 

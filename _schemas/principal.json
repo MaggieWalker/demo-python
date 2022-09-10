@@ -22,8 +22,8 @@
             }
         },
         "tenants": {
-            "type": "array",
-            "items": {
+            "type": "object",
+            "additionalProperties": {
                 "$ref": "#/$defs/tenant"
             }
         }
