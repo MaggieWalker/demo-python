@@ -1,0 +1,45 @@
+# yaml-language-server: $schema=https://api.cerbos.dev/latest/cerbos/policy/v1/Policy.schema.json
+---
+apiVersion: api.cerbos.dev/v1
+variables:
+  is_not_top_secret: R.attr.security_clearance != "top_secret"
+resourcePolicy:
+  version: "default"
+  resource: content
+  schemas:
+    principalSchema:
+      ref: cerbos:///principal.json
+  importDerivedRoles:
+    - multitenancy_roles
+  rules:
+  - name: vendor_star_can_view_any_not_secret
+    actions: ["view"]
+    derivedRoles: ["vendor_star"]
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        expr: V.is_not_top_secret
+  
+  - name: vendor_star_reviewer_by_content_type
+    actions: ["view", "review"]
+    derivedRoles: ["vendor_star"]
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        all:
+          of:
+            - expr: V.is_not_top_secret
+            - expr: P.attr.tenants["*"].attachments["Content_distribution_reviewer"] != null
+            - expr: R.attr.content_type in P.attr.tenants["*"].attachments["Content_distribution_reviewer"].content_types
+
+  - name: tenant_content_manager
+    actions: ["view", "edit"]
+    derivedRoles: ["tenant"]
+    effect: EFFECT_ALLOW
+    condition: 
+      match:
+        all:
+          of:
+            # - expr: V.is_not_top_secret
+            - expr: P.attr.tenants[R.attr.account_id].attachments["Content_label_artist_user"] != null
+            - expr:  R.attr.content_type in P.attr.tenants[R.attr.account_id].attachments["Content_label_artist_user"].content_types

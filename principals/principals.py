@@ -5,14 +5,18 @@ from cerbos.sdk.model import *
 
 Michelle = Principal(
     id="Michelle",
-    roles={
-        "AbacusProfile_contract_admin"
-    },
+    roles={"user"},
     attr={
-        "profiles": ["Abacus"],
-        "accounts": {
+        "type": "human",
+        "apps": ["Abacus"],
+        "tenants": {
             "*": {
-                "content_type": ["*"]
+                "account_id": "*",
+                "attachments": {
+                    "Abacus_contract_admin": {
+                        "role": "Abacus_contract_admin"
+                    }
+                }
             }
         }
     }
@@ -20,14 +24,18 @@ Michelle = Principal(
 
 Elaine = Principal(
     id="Elaine",
-    roles={
-        "AbacusProfile_royalties"
-    },
+    roles={"user"},
     attr={
-        "profiles": ["Abacus"],
-        "accounts": {
+        "type": "human",
+        "apps": ["Abacus"],
+        "tenants": {
             "*": {
-                "content_type": ["*"]
+                "account_id": "*",
+                "attachments": {
+                    "Abacus_royalties": {
+                        "role": "Abacus_royalties"
+                    }
+                }
             }
         }
     }
@@ -35,15 +43,22 @@ Elaine = Principal(
 
 Oliver = Principal(
     id="Oliver",
-    roles={
-        "DocumentsProfile_documents_payee_management",
-        "ContentProfile_label_artist_user_digital_audio"
-    },
+    roles={"user"},
     attr={
-        "profiles": ["Documents"],
-        "accounts": {
+        "type": "human",
+        "apps": ["Documents", "Content"],
+        "tenants": {
             "999": {
-                "content_type": ["digital_audio"]
+                "account_id": "999",
+                "attachments": {
+                    "Documents_payee_management": {
+                        "role": "Documents_payee_management"
+                    },
+                    "Content_label_artist_user": {
+                        "role": "Content_label_artist_user",
+                        "content_types": ["digital_audio"]
+                    },
+                }
             }
         }
     }
@@ -51,14 +66,19 @@ Oliver = Principal(
 
 Conrad = Principal(
     id="Conrad",
-    roles={
-        "ContentProfile_distribution_reviewer_digital_audio"
-    },
+    roles={"user"},
     attr={
-        "profiles": ["Content"],
-        "accounts": {
+        "type": "human",
+        "apps": ["Content"],
+        "tenants": {
             "*": {
-                "content_type": ["*"]
+                "account_id": "*",
+                "attachments": {
+                    "Content_distribution_reviewer": {
+                        "role": "Content_distribution_reviewer",
+                        "content_types": ["digital_audio"]
+                    }
+                }
             }
         }
     }
@@ -66,15 +86,19 @@ Conrad = Principal(
 
 Paul = Principal(
     id="Paul",
-    roles={
-        "ContentProfile_label_artist_user_digital_audio",
-        "ContentProfile_content_manager_performance_neighbouring_rights"
-    },
+    roles={"user"},
     attr={
-        "profiles": ["Content"],
-        "accounts": {
+        "type": "human",
+        "apps": ["Content"],
+        "tenants": {
             "888": {
-                "content_type": ["digital_audio", "sr_performance"]
+                "account_id": "888",
+                "attachments": {
+                    "Content_label_artist_user": {
+                        "role": "Content_label_artist_user",
+                        "content_types": ["digital_audio", "sr_performance"]
+                    }
+                }
             }
         }
     }
@@ -82,18 +106,29 @@ Paul = Principal(
 
 Allan = Principal(
     id="Allan",
-    roles={
-        "ContentProfile_content_manager_performance_neighbouring_rights"
-    },
+    roles={"user"},
     attr={
+        "type": "human",
         "profiles": ["Content"],
-        "accounts": {
+        "tenants": {
             "888": {
-                "content_type": ["sr_performance"]
+                "account_id": "888",
+                "attachments": {
+                    "Content_label_artist_user": {
+                        "role": "Content_label_artist_user",
+                        "content_types": ["sr_performance"]
+                    }
+                }
             },
             "222": {
-                "content_type": ["digital_audio"]
-            }
+                "account_id": "222",
+                "attachments": {
+                    "Content_label_artist_user": {
+                        "role": "Content_label_artist_user",
+                        "content_types": ["digital_audio"]
+                    }
+                }
+            },
         }
     }
 )
@@ -101,18 +136,30 @@ Allan = Principal(
 
 Nate = Principal(
     id="Nate",
-    roles={
-        "InsightsProfile_analytics_digital_audio",
-        "InsightsProfile_analytics_performance_neighbouring_rights"
-    },
+    roles={"user"},
     attr={
-        "profiles": ["Insights"],
-        "accounts": {
+        "type": "machine",
+        "apps": ["Insights"],
+        "tenants": {
             "888": {
-                "content_type": ["digital_audio", "sr_performance"]
+                "account_id": "888",
+                "attachments": {
+                    "Insights_analytics": {
+                        "role": "Insights_analytics",
+                        "content_types": ["digital_audio", "sr_performance"]
+                    }
+                }
             }
         }
     }
 )
 
-PRINCIPALS = [Michelle, Elaine, Oliver, Conrad, Paul, Allan, Nate]
+PRINCIPALS = [
+    Michelle,
+    Elaine,
+    Oliver,
+    Conrad,
+    Paul,
+    Allan,
+    Nate,
+]

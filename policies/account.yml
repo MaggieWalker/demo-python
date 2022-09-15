@@ -1,0 +1,33 @@
+# yaml-language-server: $schema=https://api.cerbos.dev/latest/cerbos/policy/v1/Policy.schema.json
+---
+apiVersion: api.cerbos.dev/v1
+resourcePolicy:
+  version: "default"
+  resource: account
+  schemas:
+    principalSchema: 
+      ref: cerbos:///principal.json
+    resourceSchema: 
+      ref: cerbos:///account.json
+      ignoreWhen: 
+        actions: ["create"]
+  importDerivedRoles:
+    - multitenancy_roles
+  rules:
+  - name: vendor_star_can_view_any
+    actions: ["view"]
+    derivedRoles: ["vendor_star"]
+    effect: EFFECT_ALLOW
+
+  - name: vendor_star_with_contract_admin_can_edit_any
+    actions: ["edit"]
+    derivedRoles: ["vendor_star"]
+    effect: EFFECT_ALLOW
+    condition:
+      match:
+        expr: P.attr.tenants["*"].attachments["Abacus_contract_admin"] != null
+  
+  - name: you_can_view_your_tenant_account
+    actions: ["view"]
+    derivedRoles: ["tenant"]
+    effect: EFFECT_ALLOW

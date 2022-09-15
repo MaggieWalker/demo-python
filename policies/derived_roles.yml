@@ -1,0 +1,16 @@
+# yaml-language-server: $schema=https://api.cerbos.dev/latest/cerbos/policy/v1/Policy.schema.json
+---
+apiVersion: "api.cerbos.dev/v1"
+derivedRoles:
+  name: multitenancy_roles
+  definitions:
+    - name: vendor_star 
+      parentRoles: ["user"] 
+      condition: 
+        match:
+          expr: P.attr.tenants["*"] != null
+    - name: tenant
+      parentRoles: ["user"]
+      condition:
+        match:
+          expr: R.attr.account_id in P.attr.tenants

@@ -1,0 +1,16 @@
+{
+    "$schema": "https://json-schema.org/draft/2020-12/schema",
+    "required": ["account_id", "content_type", "security_clearance"],
+    "type": "object",
+    "properties": {
+        "account_id": {
+            "type": "string"
+        },
+        "content_type": {
+            "type": "string"
+        },
+        "security_clearance": {
+            "type": "string"
+        }
+    }
+}
