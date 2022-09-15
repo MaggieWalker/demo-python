@@ -37,9 +37,12 @@
                     "type": "string",
                     "description": "The account id or *"
                 },
-                "subaccount_id": {
-                    "type": "string",
-                    "description": "The subaccount id or null"
+                "subaccount_ids": {
+                    "type": "array",
+                    "items": {
+                        "type": "string",
+                        "description": "The subaccount id or null"
+                    }
                 },
                 "label_participant_id": {
                     "type": "string",

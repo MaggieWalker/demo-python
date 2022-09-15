@@ -36,6 +36,31 @@ account_222 = Resource(
     }
 )
 
+account_3 = Resource(
+    id="account3",
+    kind="account",
+    attr={
+        "account_id": "3",
+        "subaccount_ids": ["31", "32"]
+    }
+)
+
+account_31 = Resource(
+    id="account31",
+    kind="account",
+    attr={
+        "account_id": "31"
+    }
+)
+
+account_32 = Resource(
+    id="account32",
+    kind="account",
+    attr={
+        "account_id": "32"
+    }
+)
+
 #Contracts
 contract_1 = Resource(
     id="contract1",
@@ -190,6 +215,9 @@ RESOURCES = [
     account_999,
     account_888,
     account_222,
+    account_3,
+    account_32,
+    account_31,
     contract_1,
     contract_999,
     contract_888,

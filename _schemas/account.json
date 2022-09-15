@@ -5,6 +5,12 @@
     "properties": {
         "account_id": {
             "type": "string"
+        },
+        "subaccount_ids": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            }
         }
     }
 }

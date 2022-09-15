@@ -154,6 +154,67 @@ Nate = Principal(
     }
 )
 
+Ginger = Principal(
+    id="Ginger",
+    roles={"user"},
+    attr={
+        "type": "human",
+        "apps": ["Content"],
+        "tenants": {
+            "3": {
+                "account_id": "3",
+                "subaccount_ids": ["31", "32"],
+                "attachments": {
+                    "Label_administrator": {
+                        "role": "Label_administrator",
+                        "content_types": ["digital_audio"]
+                    }
+                }
+            }
+        }
+    }
+)
+
+Colin = Principal(
+    id="Colin",
+    roles={"user"},
+    attr={
+        "type": "human",
+        "apps": ["Content"],
+        "tenants": {
+            "31": {
+                "account_id": "31",
+                "attachments": {
+                    "Label_user": {
+                        "role": "Label_user",
+                        "content_types": ["digital_audio"]
+                    }
+                }
+            }
+        }
+    }
+)
+
+Donny = Principal(
+    id="Donny",
+    roles={"user"},
+    attr={
+        "type": "human",
+        "apps": ["Content"],
+        "tenants": {
+            "32": {
+                "account_id": "32",
+                "attachments": {
+                    "Label_user": {
+                        "role": "Label_user",
+                        "content_types": ["digital_audio"]
+                    }
+                }
+            }
+        }
+    }
+)
+
 PRINCIPALS = [
     Michelle,
     Elaine,
@@ -162,4 +223,7 @@ PRINCIPALS = [
     Paul,
     Allan,
     Nate,
+    Ginger,
+    Colin,
+    Donny
 ]

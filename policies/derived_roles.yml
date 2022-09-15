@@ -13,4 +13,7 @@ derivedRoles:
       parentRoles: ["user"]
       condition:
         match:
-          expr: R.attr.account_id in P.attr.tenants
+          any:
+            of:
+            - expr: R.attr.account_id in P.attr.tenants
+            - expr: P.attr.tenants.exists(t, R.attr.account_id in P.attr.tenants[t].subaccount_ids)
